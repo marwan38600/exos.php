@@ -54,9 +54,30 @@ $zoo = [];
 
 array_push($zoo, $chat, $cheval, $autruche, $renard, $mouton);
 
-foreach ($zoo as $animal) {
-    echo $animal->name . " \n";
+foreach ($zoo as $animalNames) {
+    echo $animalNames->name . " \n";
 }
+
+$ages = [];
+
+$etat = [
+    "jeunes" => [],
+    "vieux" => []
+];
+
+foreach ($zoo as $animalAges) {
+    array_push($ages, $animalAges->getAge());
+    if ($animalAges->getAge() < 20) {
+        array_push($etat["jeunes"], $animalAges->name);
+    } else {
+        array_push($etat["vieux"], $animalAges->name);
+    }
+}
+
+print_r($ages);
+
+var_dump($etat);
+
 
 
 
