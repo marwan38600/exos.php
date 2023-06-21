@@ -1,6 +1,6 @@
 <?php
 
-class Monster
+class Pokemon
 {
     public $pv;
     public $atk;
@@ -60,10 +60,20 @@ class Monster
         $chance = rand(0, 3);
         if ($this->pv < 50 && $chance == 2) {
             $this->littlePotion() . " \n";
-        } else if ($this->pv > 50) {
-            echo "";
+        }
+    }
+    public function checkDeath()
+    {
+        if ($this->pv == 0) {
+            echo "$this->name est mort ☠️";
         }
     }
 
 
+
+
 }
+
+// class MonsterAqua extends Monster {
+//     public 
+// }
