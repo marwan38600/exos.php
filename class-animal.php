@@ -51,15 +51,6 @@ class Animal
         return $this->genre;
     }
 
-    // public function setGenre($genre)
-    // {
-    //     if ($genre == true) {
-    //         return "un";
-    //     } else {
-    //         return "une";
-    //     }
-    // }
-
     public function noise()
     {
         echo "Je fais du bruit et je suis chiant ";

@@ -1,70 +1,100 @@
 <?php
 
 require_once("./class-pookemon.php");
+require_once("./model.php");
 
-$host = "localhost";
-$dbname = "recap-php";
-$username = "root";
-$password = "";
+// $host = "localhost";
+// $dbname = "recap-php";
+// $username = "root";
+// $password = "";
 
-$db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+// $db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
 
-$sql = "SELECT * from pokemon WHERE name = 'Mewtwo'";
+// $sql = "SELECT * from pokemon";
 
-$statement = $db->prepare($sql);
+// $statement = $db->prepare($sql);
 
-$statement->execute();
+// $statement->execute();
 
-$pokemon = $statement->fetch(PDO::FETCH_ASSOC);
+// $pokemon = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-$mewtwo = new Pokemon($pokemon["hp"], $pokemon["atk"], $pokemon["name"], $pokemon["ultimate_attack"]);
+// $mewtwo = new Pokemon($pokemon["hp"], $pokemon["atk"], $pokemon["name"], $pokemon["ultimate_attack"]);
+
+// print_r($pokemon);
 
 
-function insertNewPokemon($name, $hp, $atk, $ultimateAttack)
+
+
+function insertNewPokemon($name, $hp, $atk, $ultimateAttack, $trainerId)
 {
-    $host = "localhost";
-    $dbname = "recap-php";
-    $username = "root";
-    $password = "";
-    $db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $sql = "INSERT INTO pokemon (name, hp, atk, ultimate_attack) VALUES (:name, :hp, :atk, :ultimateAttack)";
-    $statement = $db->prepare($sql);
+    $connection = new ConnexionDataBase("localhost", "recap-php", "root", "");
+    $dbase = $connection->dbase;
+    $sql = "INSERT INTO pokemon (hp, name, atk, ultimate_attack, trainer_id) VALUES (:hp, :name, :atk, :ultimateAttack, :trainer_id)";
+    $statement = $dbase->prepare($sql);
     $statement->bindParam(':name', $name);
     $statement->bindParam(':hp', $hp);
     $statement->bindParam(':atk', $atk);
     $statement->bindParam(':ultimateAttack', $ultimateAttack);
+    $statement->bindParam(':trainer_id', $trainerId);
     $statement->execute();
 }
 
 function deletePokemon($name)
 {
-    $host = "localhost";
-    $dbname = "recap-php";
-    $username = "root";
-    $password = "";
-    $db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $connection = new ConnexionDataBase("localhost", "recap-php", "root", "");
+    $dbase = $connection->dbase;
     $sql = "DELETE FROM pokemon WHERE name = :name";
-    $statement = $db->prepare($sql);
+    $statement = $dbase->prepare($sql);
     $statement->bindParam(':name', $name);
     $statement->execute();
 }
 
-function updatePokemon($oldName, $newName, $hp, $atk, $ultimateAttack)
+
+function updatePokemon($oldName, $newName, $hp, $atk, $ultimateAttack, $trainerId)
 {
-    $host = "localhost";
-    $dbname = "recap-php";
-    $username = "root";
-    $password = "";
-    $db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $sql = "UPDATE pokemon SET name = :newName, hp = :newHP, atk = :newAtk, ultimate_attack = :newUltimateAttack WHERE name = :oldName";
-    $statement = $db->prepare($sql);
+    $connection = new ConnexionDataBase("localhost", "recap-php", "root", "");
+    $dbase = $connection->dbase;
+    $sql = "UPDATE pokemon SET name = :newName, hp = :newHP, atk = :newAtk, ultimate_attack = :newUltimateAttack, trainer_id = :newTrainerId WHERE name = :oldName";
+    $statement = $dbase->prepare($sql);
     $statement->bindParam(':newName', $newName);
     $statement->bindParam(':newHP', $hp);
     $statement->bindParam(':newAtk', $atk);
     $statement->bindParam(':newUltimateAttack', $ultimateAttack);
+    $statement->bindParam(':newTrainerId', $trainerId);
     $statement->bindParam(':oldName', $oldName);
     $statement->execute();
 }
 
+function insertTrainer($name)
+{
+    $connection = new ConnexionDataBase("localhost", "recap-php", "root", "");
+    $dbase = $connection->dbase;
+    $sql = "INSERT INTO trainers (name) VALUES (:name)";
+    $statement = $dbase->prepare($sql);
+    $statement->bindParam(':name', $name);
+    $statement->execute();
+}
 
-updatePokemon("Ratatac", "Ratata", 100, 30, 50);
+
+function deleteTrainer($name)
+{
+    $connection = new ConnexionDataBase("localhost", "recap-php", "root", "");
+    $dbase = $connection->dbase;
+    $sql = "DELETE FROM trainers WHERE name = :name";
+    $statement = $dbase->prepare($sql);
+    $statement->bindParam(':name', $name);
+    $statement->execute();
+}
+
+
+
+function updateTrainer($oldName, $newName)
+{
+
+    $sql = "UPDATE trainers SET name = :newName WHERE name = :oldName";
+    $statement = $dbase->prepare($sql);
+    $statement->bindParam(':newName', $newName);
+    $statement->bindParam(':oldName', $oldName);
+    $statement->execute();
+}
+

@@ -74,6 +74,8 @@ class Pokemon
 
 }
 
-// class MonsterAqua extends Monster {
-//     public 
+// class PokemonPsycho extends Pokemon {
+//     public $magicHit 40;
+
+
 // }
