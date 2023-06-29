@@ -27,7 +27,7 @@ require_once("./model.php");
 
 function insertNewPokemon($name, $hp, $atk, $ultimateAttack, $trainerId)
 {
-    $connection = new ConnexionDataBase("localhost", "recap-php", "root", "");
+    $connection = new Model("localhost", "recap-php", "root", "");
     $dbase = $connection->dbase;
     $sql = "INSERT INTO pokemon (hp, name, atk, ultimate_attack, trainer_id) VALUES (:hp, :name, :atk, :ultimateAttack, :trainer_id)";
     $statement = $dbase->prepare($sql);
@@ -41,7 +41,7 @@ function insertNewPokemon($name, $hp, $atk, $ultimateAttack, $trainerId)
 
 function deletePokemon($name)
 {
-    $connection = new ConnexionDataBase("localhost", "recap-php", "root", "");
+    $connection = new Model("localhost", "recap-php", "root", "");
     $dbase = $connection->dbase;
     $sql = "DELETE FROM pokemon WHERE name = :name";
     $statement = $dbase->prepare($sql);
@@ -52,7 +52,7 @@ function deletePokemon($name)
 
 function updatePokemon($oldName, $newName, $hp, $atk, $ultimateAttack, $trainerId)
 {
-    $connection = new ConnexionDataBase("localhost", "recap-php", "root", "");
+    $connection = new Model("localhost", "recap-php", "root", "");
     $dbase = $connection->dbase;
     $sql = "UPDATE pokemon SET name = :newName, hp = :newHP, atk = :newAtk, ultimate_attack = :newUltimateAttack, trainer_id = :newTrainerId WHERE name = :oldName";
     $statement = $dbase->prepare($sql);
@@ -67,7 +67,7 @@ function updatePokemon($oldName, $newName, $hp, $atk, $ultimateAttack, $trainerI
 
 function insertTrainer($name)
 {
-    $connection = new ConnexionDataBase("localhost", "recap-php", "root", "");
+    $connection = new Model("localhost", "recap-php", "root", "");
     $dbase = $connection->dbase;
     $sql = "INSERT INTO trainers (name) VALUES (:name)";
     $statement = $dbase->prepare($sql);
@@ -78,7 +78,7 @@ function insertTrainer($name)
 
 function deleteTrainer($name)
 {
-    $connection = new ConnexionDataBase("localhost", "recap-php", "root", "");
+    $connection = new Model("localhost", "recap-php", "root", "");
     $dbase = $connection->dbase;
     $sql = "DELETE FROM trainers WHERE name = :name";
     $statement = $dbase->prepare($sql);
@@ -90,11 +90,11 @@ function deleteTrainer($name)
 
 function updateTrainer($oldName, $newName)
 {
-
+    $connection = new Model("localhost", "recap-php", "root", "");
+    $dbase = $connection->dbase;
     $sql = "UPDATE trainers SET name = :newName WHERE name = :oldName";
     $statement = $dbase->prepare($sql);
     $statement->bindParam(':newName', $newName);
     $statement->bindParam(':oldName', $oldName);
     $statement->execute();
 }
-
